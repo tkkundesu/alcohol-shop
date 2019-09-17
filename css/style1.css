@@ -1,0 +1,263 @@
+@charset "UTF-8";
+html{
+   
+	}
+body{
+	margin: 0 0 0 0 ;
+	color: #2d4160;
+	background-color: #efffb3;
+	font-family: 'Donegal One';
+
+}
+#header{
+	position: fixed;
+	float:left;
+	line-height: 40px;
+	width: 170px;
+	padding: 40px 25px 0 25px;
+	margin-bottom: 30px; 
+	background-color: rgba(218,221,216,0.7);
+	height: 100vh;
+	text-align: center;
+}
+.logname{
+	color: ;
+	font-weight: bold;
+}
+.category{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 50px; 
+}
+
+
+
+
+
+
+ul{
+	list-style-type: none;
+	padding: 0; 
+}
+a:link {
+	color:#2d4160;
+	text-decoration:none;
+}
+a:visited {
+	color:#2d4160;
+	text-decoration:none;
+}
+a:active{
+	color:#2d4160;
+	text-decoration:none;
+}
+
+.tag-all a:hover {
+	color:#8fa896;
+	border-bottom: 1px solid #8fa896;
+	}
+.saketaro{
+	margin: 0 auto 0 auto;
+	max-width: 1200px;
+}
+
+
+
+
+#pan{
+	float:right;
+	width: 72%;
+	padding: 40px 0 200px 0;
+	margin: 0 20px 0 0;
+}
+
+#pan a:hover{
+  opacity: 0.7;
+}
+
+/*index*/
+.index-img__size{
+	padding: 10px;
+}
+
+.index-search{
+	padding-left: 40px;
+}
+
+/*商品一覧*/
+.detail-all{
+	display: flex;
+	margin: 0 auto 0 auto;
+	max-width: 1000px;
+}
+.detail-img{
+	padding: 20px 0 auto 0;
+	margin: auto;
+}
+
+.detail-about{
+	margin: auto;
+}
+.detail-about form{
+	margin-left: 30px;
+}
+.detail-fadein {
+    opacity : 0;
+    transform : translate(0, 2px);
+    transition : all 300ms;
+    margin-right: 40px; 
+}
+.detail-fadein.scrollin {
+    opacity : 1;
+    transform : translate(0, 0);
+}
+
+.img_hover:hover{
+	opacity:0.7;
+}
+.img_hover{
+	border-radius: 10px;
+}
+
+.apen{
+	font-weight: bold;
+	font-size: 25px;
+}
+.ain{
+	text-align: center;
+}
+
+.b{
+	text-align:center;
+}
+.button{
+	width: auto;
+	height: 35px;
+	background: #6F684E;
+ 	border-radius: 5px;
+ 	color: white;
+ 	cursor: pointer;
+ 	margin-bottom: 5px;
+}
+
+.textbox{
+	border-radius: 5px;
+	width:	20rem;
+	height: 2rem;
+}
+
+
+.footer-clearfix{
+	padding: 0;
+	margin: 0;
+	position: fixed;
+	bottom: 0px;
+	background-color: #1d3803;
+	width: 100%;
+	height: 50px;
+}
+.footer-clearfix p{
+	color:#fff;
+	padding: 0 auto;
+	text-align: center;
+}
+.owner{
+	color: #6F684E;
+	text-align: right;
+	position:relative;
+	left:90%;
+	bottom:40px;
+}
+
+.category_block{
+	display: flex;
+	flex-wrap: wrap;
+	align-content: space-around;
+}
+.category_kind{
+	text-align:center;
+	width:280px;
+}
+.category_name{
+	width:285px;
+	text-align: center;
+	padding: 0;
+	margin: 0;
+	word-break: keep-all;
+}
+
+.table-favorite{
+  clear:both;
+  border-collapse:collapse;
+  margin:40px 0 20px 0;
+  border-bottom:1px solid #54698a;
+}
+.table-favorite th{
+  color:##2d4160;
+  white-space: nowrap;
+  width: 100px;
+  border-top:1px solid #54698a;
+  border-bottom:1px solid #54698a;
+  padding:10px;
+}
+.table-favorite td{
+  border-bottom:1px dashed #999;
+  white-space: nowrap;
+  width: 100px;
+  text-align: center;
+  padding:10px;
+}
+.table-favorite tr:nth-last-child(2){
+  border-bottom:1px solid #54698a;
+}
+.m,a {
+  margin:10px 0;
+}
+.m{
+  margin-top:0;
+  margin-bottom:10px;
+}
+
+.bold{
+  font-weight:bold;
+}
+
+.table-form{
+  clear:both;
+  border-collapse:collapse;
+  margin:40px auto 20px auto;
+  border-bottom:1px solid #54698a;
+}
+.table-form th{
+  color:##2d4160;
+  white-space: nowrap;
+  width: 100px;
+  border-top:1px solid #54698a;
+  border-bottom:1px solid #54698a;
+  padding:10px;
+  text-align:left;
+}
+.table-form td{
+  border-bottom:1px dashed #999;
+  white-space: nowrap;
+  width: 100px;
+  text-align:left;
+  padding:10px;
+}
+.table-form tr:nth-last-child(2){
+  border-bottom:1px solid #54698a;
+}
+
+.purchase-message{
+  margin:auto;
+}
+.purchase-img{
+  height:250px;
+  width:250px;
+  margin:0 auto;
+}
+.thank{
+  text-align:center;
+}
+
