@@ -5,7 +5,7 @@
 <link rel="icon" href='images/favicon.ico'>
  
 	<meta charset="UTF-8">
-	<title>teamC</title>
+	<title>酒太郎</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 	<link rel="stylesheet" href="css/style1.css">
 	<link href="https://fonts.googleapis.com/css?family=Donegal+One&display=swap" rel="stylesheet">
