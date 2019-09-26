@@ -1,5 +1,16 @@
 <?php require 'header.php';?>
 <?php
+require_once(__DIR__.'/config.php');
+
+try{
+	$pdo=new PDO(DSN,DB_USERNAME,DB_PASSWORD);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+ }catch(PDOException $e){
+     echo $e->getmessage();
+     exit;
+ } 
+?>
+<?php
 if ($_SERVER ['REQUEST_METHOD'] === 'POST'){
 	$id=$_REQUEST['id'];
 if(!isset($_SESSION['product'])){
@@ -34,7 +45,6 @@ echo '<script>alert("カートに【',$_REQUEST['name'],'】を追加しまし�
 	<div class="detail-all">
 		<div class="detail-img">
 			<?php
-			$pdo=new PDO('mysql:host=localhost;dbname=shop;charset=utf8','staff','password');
 			$sql=$pdo->prepare('select * from product where id=?');
 			$sql->execute([$_REQUEST['id']]);
 			foreach ($sql as $row) {
