@@ -1,5 +1,16 @@
 
 <?php require 'header.php';?>
+<?php
+require_once(__DIR__.'/config.php');
+
+try{
+	$pdo=new PDO(DSN,DB_USERNAME,DB_PASSWORD);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+ }catch(PDOException $e){
+     echo $e->getmessage();
+     exit;
+ } 
+?>
  <main>
 <div id="pan" class="clearfix">	
 <div class="category">
@@ -13,8 +24,7 @@
 <h2>お気に入り</h2>
 <?php
 if (isset($_SESSION['customer'])) {
-		$pdo=new PDO('mysql:host=localhost;dbname=shop;charset=utf8', 
-		'staff', 'password');
+		
 	$sql=$pdo->prepare(
 		'select * from favorite, product where customer_id=? and product_id=id');
 	$sql->execute([$_SESSION['customer']['id']]);
