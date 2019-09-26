@@ -1,9 +1,19 @@
 <?php require 'header.php'; ?>
 <?php
+require_once(__DIR__.'/config.php');
+
+try{
+	$pdo=new PDO(DSN,DB_USERNAME,DB_PASSWORD);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+ }catch(PDOException $e){
+     echo $e->getmessage();
+     exit;
+ } 
+?>
+<?php
  if($_SERVER['REQUEST_METHOD']==='POST'){
 unset($_SESSION['customer']);
-$pdo=new PDO('mysql:host=localhost;dbname=shop;charset=utf8', 
-	'staff', 'password');
+
 $sql=$pdo->prepare('select * from customer where login=? and password=?');
 $sql->execute([$_REQUEST['login'], $_REQUEST['password']]);
 foreach ($sql as $row) {
