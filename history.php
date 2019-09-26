@@ -1,11 +1,20 @@
 <?php require 'header.php'; ?>
+<?php
+require_once(__DIR__.'/config.php');
 
+try{
+	$pdo=new PDO(DSN,DB_USERNAME,DB_PASSWORD);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+ }catch(PDOException $e){
+     echo $e->getmessage();
+     exit;
+ } 
+?>
 <?php
 echo '<div id="pan" class="clearfixed">';
 echo '<h2>ご注文履歴</h2>';
 if (isset($_SESSION['customer'])) {
-	$pdo=new PDO('mysql:host=localhost;dbname=shop;charset=utf8', 
-		'staff', 'password');
+	
 	$sql_purchase=$pdo->prepare(
 		'select * from purchase where customer_id=? and state=0 order by id desc');
 	$sql_purchase->execute([$_SESSION['customer']['id']]);
