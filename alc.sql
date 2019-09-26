@@ -1,7 +1,7 @@
-drop database if exists shop;
-create database shop default character set utf8 collate utf8_general_ci;
-grant all on shop.* to 'staff'@'localhost' identified by 'password';
-use shop;
+drop database if exists heroku_8744cea104e5bbe;
+create database heroku_8744cea104e5bbe default character set utf8 collate utf8_general_ci;
+grant all on shop.* to 'b5b5250bdc1f04'@'us-cdbr-iron-east-02.cleardb.net' identified by 'ecaa3b1d';
+use heroku_8744cea104e5bbe;
 
 create table product (
 	id int auto_increment primary key, 
