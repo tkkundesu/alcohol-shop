@@ -1,5 +1,15 @@
 <?php require 'header.php'?>
+<?php
+require_once(__DIR__.'/config.php');
 
+try{
+	$pdo=new PDO(DSN,DB_USERNAME,DB_PASSWORD);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+ }catch(PDOException $e){
+     echo $e->getmessage();
+     exit;
+ } 
+?>
 <div id="pan" class="clearfix">
 	
 <div class="category">
@@ -15,7 +25,6 @@
 	<h2>商品一覧</h2>
 <div class="category_block">
 <?php 
-	$pdo=new PDO('mysql:host=localhost;dbname=shop;charset=utf8','staff', 'password');
 
 	$keyword="";
 
