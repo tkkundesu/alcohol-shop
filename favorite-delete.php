@@ -1,8 +1,18 @@
 <?php require 'header.php';?>
 <?php
+require_once(__DIR__.'/config.php');
+
+try{
+	$pdo=new PDO(DSN,DB_USERNAME,DB_PASSWORD);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+ }catch(PDOException $e){
+     echo $e->getmessage();
+     exit;
+ } 
+?>
+<?php
 if (isset($_SESSION['customer'])) {
-	$pdo=new PDO('mysql:host=localhost;dbname=shop;charset=utf8', 
-		'staff', 'password');
+	
 	$sql=$pdo->prepare(
 		'delete from favorite where customer_id=? and product_id=?');
 	$sql->execute([$_SESSION['customer']['id'], $_REQUEST['id']]);
