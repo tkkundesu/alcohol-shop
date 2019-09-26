@@ -1,9 +1,18 @@
 <?php require 'header.php'; ?>
+<?php
+require_once(__DIR__.'/config.php');
+
+try{
+	$pdo=new PDO(DSN,DB_USERNAME,DB_PASSWORD);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+ }catch(PDOException $e){
+     echo $e->getmessage();
+     exit;
+ } 
+?>
 <div id="pan" class="clearfixed">
 <div class="purchase">
 <?php
-$pdo=new PDO('mysql:host=localhost;dbname=shop;charset=utf8',
-	'staff', 'password');
 $purchase_id=1;
 foreach ($pdo->query('select max(id) from purchase') as $row) {
 	$purchase_id=$row['max(id)']+1;
