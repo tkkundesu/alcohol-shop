@@ -1,4 +1,4 @@
-<?php require 'header.php';?>
+<?php require 'header.php';//ヘッダーの読み込み?>
 
 <?php
 echo '<div id="pan" class="clearfix main"><form action="customer-output.php" method="post">';
@@ -14,4 +14,4 @@ echo 'パスワード：',$_REQUEST['password'],'<br>';
 echo '<input type="submit" value="登録" class="button">';
 echo '</form></div>';
 ?>
-<?php require 'footer.php';?>
+<?php require 'footer.php';//フッターの読み込み?>
