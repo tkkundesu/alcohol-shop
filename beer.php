@@ -3,10 +3,10 @@
 require_once(__DIR__.'/config.php');
 
 try{
-	$db=new PDO(DSN,DB_USERNAME,DB_PASSWORD);
+	$db=new PDO(DSN,DB_USERNAME,DB_PASSWORD);//データベース接続
     $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
  }catch(PDOException $e){
-     echo $e->getmessage();
+     echo $e->getmessage();//例外表示
      exit;
  } 
 ?>
@@ -24,12 +24,13 @@ try{
 	<h2>ビール</h2>
 		<div class="category_block">
 	<?php
-	$sql=$db->query("select * from product where genre = 'ビール' ");
+	//ジャンルがビールの商品の一覧表示画面
+	$sql=$db->query("select * from product where genre = 'ビール' ");//ジャンルがビールの商品抽出
 	foreach ($sql as $row) :?>
 			<div class="category_kind">
-			<a href="detail.php?id=<?php echo $row['id']; ?>"><img src="images/<?php echo $row['id']; ?>.jpg" width="180" height="180" class="img_hover"></a>
+			<a href="detail.php?id=<?php echo $row['id'];//商品詳細画面のリンク ?>"><img src="images/<?php echo $row['id']; ?>.jpg" width="180" height="180" class="img_hover"></a>
 	<p><?php echo '<div class="category_name">',$row['name'],'</div>'; ?></p>
-	<p><?php echo round($row['price']*1.08); ?>円(税込）</p>
+	<p><?php echo round($row['price']*1.08); //税込計算?>円(税込）</p>
 	</div>
 	<?php endforeach;?>
 </div>
