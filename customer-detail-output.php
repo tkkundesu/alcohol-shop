@@ -16,8 +16,9 @@ if (isset($_SESSION['customer'])) {
 	$sql=$pdo->prepare('select * from customer where login=?');//ログイン名の重複をチェック
 	$sql->execute([$_REQUEST['login']]);
 }
-if (empty($sql->fetchAll())) {
+if (empty($sql->fetchAll())) {//ログイン名の重複がなかった時の処理
 		$sql=$pdo->prepare('update customer set name=?, address=?, login=?, password=? where id=?');
+	        //カスタマーテーブルの情報の更新
 		$sql->execute([
 			$_REQUEST['name'],$_REQUEST['address'],$_REQUEST['login'],$_REQUEST['password'],$id]);
 		$_SESSION['customer']=[//セッションへ代入
