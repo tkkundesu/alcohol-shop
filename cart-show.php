@@ -4,12 +4,12 @@
 <?php
 echo '<div id="pan" class="clearfixed">';
 echo '<h2>カート</h2>';
-if(!empty($_SESSION['product'])){
+if(!empty($_SESSION['product'])){//カートに商品が入っている時
 	echo '<table class="table-form">';
 	echo '<th></th><th class="num">商品番号</th><th>商品名</th><th>本体価格</th><th>税込価格</th><th>数量</th><th>小計</th><th></th>';
 	$total=0;
 
-	foreach($_SESSION['product'] as $id=>$product){
+	foreach($_SESSION['product'] as $id=>$product){//セッションプロダクトの中身を一覧表示
 		echo '<tr>';
 		echo '<td></td>';
 		echo '<td>',$id,'</td>';
@@ -21,7 +21,7 @@ if(!empty($_SESSION['product'])){
 		$subtotal=$product['price']*1.08*$product['count'];
 		$total+=$includeTax;
 		echo '<td>',round($subtotal),'円</td>';
-		echo '<form class="button" action="cart-delete.php">';
+		echo '<form class="button" action="cart-delete.php">';//削除のフォーム
 		echo '<input type="hidden" name="id" value=',$id,'>';
 		echo '<input type="hidden" name="delete" value=',$product['name'],'>';
 		echo '<td><input class="botton" type="submit" value="削除"></td>';
