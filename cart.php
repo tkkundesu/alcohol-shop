@@ -2,7 +2,7 @@
 <?php
 echo '<div id="pan" class="clearfixed">';
 echo '<h2>カート</h2>';
-if(!empty($_SESSION['product'])){
+if(!empty($_SESSION['product'])){//カートの中身が空じゃない場合
 	echo '<table class="table-form">';
 	echo '<th></th><th class="num">商品番号</th><th>商品名</th><th>本体価格</th><th>税込価格</th><th>数量</th><th>小計</th><th></th>';
 	$total=0;
@@ -13,13 +13,13 @@ if(!empty($_SESSION['product'])){
 		echo '<td>',$id,'</td>';
 		echo '<td><a href="detail.php?id=',$id,'">',$product['name'],'</a></td>';
 		echo '<td>',$product['price'],'円</td>';
-		$includeTax=$product['price']*1.08;
+		$includeTax=$product['price']*1.08;//税込価格
 		echo '<td>',round($includeTax),'円</td>';
 		echo '<td>',$product['count'],'</td>';
-		$subtotal=$product['price']*1.08*$product['count'];
-		$total+=$includeTax;
+		$subtotal=$product['price']*1.08*$product['count'];//小計
+		$total+=$includeTax;//合計
 		echo '<td>',round($subtotal),'円</td>';
-		echo '<form class="button" action="cart-delete.php">';
+		echo '<form class="button" action="cart-delete.php">';//削除用フォーム
 		echo '<input type="hidden" name="id" value=',$id,'>';
 		echo '<input type="hidden" name="delete" value=',$product['name'],'>';
 		echo '<td><input class="botton" type="submit" value="削除"></td>';
