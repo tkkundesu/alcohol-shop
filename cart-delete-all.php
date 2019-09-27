@@ -1,8 +1,8 @@
 <?php require 'header.php'; ?>
 
 <?php
-unset($_SESSION['product']);
-unset($_SESSION['cart']);?>
+unset($_SESSION['product']);//カートの中身を管理しているセッションのアンセット
+unset($_SESSION['cart']);//カートの個数を管理しているセッションのアンセット?>
 
 <div id="pan" class="clearfixed">
 <h2>カート</h2>
