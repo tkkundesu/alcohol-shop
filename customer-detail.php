@@ -1,7 +1,7 @@
 <?php require 'header.php';?>
 <?php
 $name=$address=$login=$password='';
-if (isset($_SESSION['customer'])){
+if (isset($_SESSION['customer'])){//セッション情報を変数に代入
 	$name=$_SESSION['customer']['name'];
 	$address=$_SESSION['customer']['address'];
 	$login=$_SESSION['customer']['login'];
@@ -9,7 +9,7 @@ if (isset($_SESSION['customer'])){
 	echo '<div id="pan" class="clearfix main"><h2>お客様情報</h2>';
 echo '<form action ="customer-detail-confirm.php" method="post">';
 echo '<p>お名前<br>';
-echo '<span><input type="text" name="name" value="',$name,'" class="textbox">';
+echo '<span><input type="text" name="name" value="',$name,'" class="textbox">';//現在のセッション情報をあらかじめ表示
 echo '</span></p>';
 echo '<p>ご住所<br>';
 echo '<span><input type="text" name="address" value="',$address,'" class="textbox">';
