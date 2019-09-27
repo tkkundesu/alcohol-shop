@@ -32,12 +32,6 @@ if(!empty($_SESSION['product'])){//カートに商品が入っている時
 	echo '</table>';
 	echo '<div class="purchase-button">';
 	echo '<form class="button" name="purchase" action="purchase-input.php" ,method="post">';
-	echo '<input type="hidden" name="id" value=',$id,'>';
-	echo '<input type="hidden" name="name" value=',$product['name'],'>';
-	echo '<input type="hidden" name="price" value=',$product['price'],'>';
-	echo '<input type="hidden" name="indludeTax" value=',$includeTax,'>';
-	echo '<input type="hidden" name="count" value=',$product['count'],'>';
-	echo '<input type="hidden" name="total" value=',$total,'>';
 	echo '<input class="bottonp" type="submit" value="ご購入手続きを進める">';
 	echo '</form>';
 	echo '</div>';
