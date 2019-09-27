@@ -1,6 +1,7 @@
 
 <?php require 'header.php';?>
 <?php
+//新規登録画面
 echo '<div id="pan" class="clearfix"><h2>新規登録</h2>';
 echo '<form action ="customer-confirm.php" method="post">';
 echo '<p>お名前<br>';
