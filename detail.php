@@ -12,20 +12,20 @@ try{
 ?>
 <?php
 if ($_SERVER ['REQUEST_METHOD'] === 'POST'){
-	$id=$_REQUEST['id'];
-if(!isset($_SESSION['product'])){
+	$id=$_REQUEST['id'];//送られてきたID番号変数に代入
+if(!isset($_SESSION['product'])){//セッションプロダクト未定義時定義
 	$_SESSION['product']=[];
 }
 $count=0;
-if(isset($_SESSION['product'][$id])){
+if(isset($_SESSION['product'][$id])){//もともとカートに任意の商品が入っている時の個数を代入
 	$count=$_SESSION['product'][$id]['count'];
 }
-$_SESSION['product'][$id]=[
+$_SESSION['product'][$id]=[//セッションに情報代入
 'name'=>$_REQUEST['name'],
 'price'=>$_REQUEST['price'],
 'count'=>$count+$_REQUEST['count']
 ];
-$_SESSION['cart']['count']=$_REQUEST['count']+$_SESSION['cart']['count'];
+$_SESSION['cart']['count']=$_REQUEST['count']+$_SESSION['cart']['count'];//カート内の個数を追加
 echo '<script>alert("カートに【',$_REQUEST['name'],'】を追加しました");</script>';
 }
 
@@ -51,10 +51,10 @@ echo '<script>alert("カートに【',$_REQUEST['name'],'】を追加しまし�
 				echo '<img src="images/',$row['id'], '.jpg" width="200" height="200">';//画像表示
 				echo '<p>※画像はイメージです</p></div>';
 				echo '<div class="detail-about"><form action="detail.php" method="post">';
-				echo '<p>商品番号：',$row['id'],'</p>';
-				echo '<p>商品名：',$row['name'],'</p>';
+				echo '<p>商品番号：',$row['id'],'</p>';//商品ID表示
+				echo '<p>商品名：',$row['name'],'</p>';//商品名表示
 				echo '<p>価格：本体価格',$row['price'],'円　税込価格',round(($row['price'])*1.08),'円</p>';
-				echo '<p>個数：<select name="count">';
+				echo '<p>個数：<select name="count">';//個数を１０個以内で選択
 				for ($i=1;$i<=10;$i++){
 					echo'<option value="',$i,'">',$i,'</option>';
 				}
@@ -65,9 +65,9 @@ echo '<script>alert("カートに【',$_REQUEST['name'],'】を追加しまし�
 				echo '<p>味わい・種類：',$row['taste'],'</p>';
 
 				
-				echo '<input type="hidden" name="id" value="',$row['id'],'">';
-				echo '<input type="hidden" name="name" value="',$row['name'],'">';
-				echo '<input type="hidden" name="price" value="',$row['price'],'">';
+				echo '<input type="hidden" name="id" value="',$row['id'],'">';//カート追加時の情報
+				echo '<input type="hidden" name="name" value="',$row['name'],'">';//カート追加時の情報
+				echo '<input type="hidden" name="price" value="',$row['price'],'">';//カート追加時の情報
 				echo '<p><input type="submit" value="カートに追加"></p>';
 				echo '</form>';
 				echo '<p><a href="favorite-insert.php?id=',$row['id'],'">お気に入りに追加</a></p></div>';
