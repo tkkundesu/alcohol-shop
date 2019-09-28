@@ -3,10 +3,10 @@
 require_once(__DIR__.'/config.php');
 
 try{
-	$pdo=new PDO(DSN,DB_USERNAME,DB_PASSWORD);
+	$pdo=new PDO(DSN,DB_USERNAME,DB_PASSWORD);//データベース接続
     $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
  }catch(PDOException $e){
-     echo $e->getmessage();
+     echo $e->getmessage();//例外表示
      exit;
  } 
 ?>
@@ -45,10 +45,10 @@ echo '<script>alert("カートに【',$_REQUEST['name'],'】を追加しまし�
 	<div class="detail-all">
 		<div class="detail-img">
 			<?php
-			$sql=$pdo->prepare('select * from product where id=?');
+			$sql=$pdo->prepare('select * from product where id=?');//ID番号のプロダクトテーブル商品を抽出
 			$sql->execute([$_REQUEST['id']]);
 			foreach ($sql as $row) {
-				echo '<img src="images/',$row['id'], '.jpg" width="200" height="200">';
+				echo '<img src="images/',$row['id'], '.jpg" width="200" height="200">';//画像表示
 				echo '<p>※画像はイメージです</p></div>';
 				echo '<div class="detail-about"><form action="detail.php" method="post">';
 				echo '<p>商品番号：',$row['id'],'</p>';
