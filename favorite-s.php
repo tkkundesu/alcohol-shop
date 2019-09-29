@@ -4,10 +4,10 @@
 require_once(__DIR__.'/config.php');
 
 try{
-	$pdo=new PDO(DSN,DB_USERNAME,DB_PASSWORD);
+	$pdo=new PDO(DSN,DB_USERNAME,DB_PASSWORD);//データベース接続
     $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
  }catch(PDOException $e){
-     echo $e->getmessage();
+     echo $e->getmessage();//エラー表示
      exit;
  } 
 ?>
@@ -27,12 +27,12 @@ if (isset($_SESSION['customer'])) {
 		
 	$sql=$pdo->prepare(
 		'select * from favorite, product '.
-		'where customer_id=? and product_id=id');
+		'where customer_id=? and product_id=id');//顧客Idからお気に入り商品を抽出
 	$sql->execute([$_SESSION['customer']['id']]);
 	if(!empty($sql)){
 		echo '<table class="table-favorite">';
 	    echo '<tr><th>商品番号</th><th>商品名</th><th>価格</th><th>削除</th>';
-		foreach ($sql as $row) {
+		foreach ($sql as $row) {//お気に入り表示
 		$id=$row['id'];
 		echo '<tr>';
 		echo '<td>', $id, '</td>';
