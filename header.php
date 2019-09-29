@@ -15,10 +15,10 @@
 		
 		<?PHP
 		if(!isset($_SESSION['cart'])){
-			 $_SESSION['cart']=[];
+			 $_SESSION['cart']=[];//カートの個数のセッションが用意されていない場合初期化
 	    $_SESSION['cart']['count']=0;}
 		echo '<header><div id="header"><a href="index1.php"><img src="images/main-logo2.png" width="150" height="150"></a>';
-		if (isset($_SESSION['customer'])) {
+		if (isset($_SESSION['customer'])) {//ログインしている時の表示
 		echo 	'<div class="tag-all"><ul>';
 		echo		'<li><span class="logname">',$_SESSION['customer']['name'],'</span>さん</li>';
 		echo		'<li><a href="index1.php">ホーム</a></li>';
@@ -29,7 +29,7 @@
 		echo		'<li><a href="login-input.php">ログイン</a></li>';
 		echo		'<li><a href="logout-input.php">ログアウト</a></li>';
 		echo 	'</ul></div>';
-		} else{
+		} else{//ログインしていないのに時の表示
 		echo 	'<div class="tag-all"><ul>';
 		echo		'<li>ようこそゲストさん</li>';
 		echo		'<li><a href="index1.php">ホーム</a></li>';
