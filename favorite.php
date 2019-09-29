@@ -4,10 +4,10 @@
 require_once(__DIR__.'/config.php');
 
 try{
-	$pdo=new PDO(DSN,DB_USERNAME,DB_PASSWORD);
+	$pdo=new PDO(DSN,DB_USERNAME,DB_PASSWORD);//データベース接続
     $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
  }catch(PDOException $e){
-     echo $e->getmessage();
+     echo $e->getmessage();//エラー表示
      exit;
  } 
 ?>
@@ -26,13 +26,13 @@ try{
 if (isset($_SESSION['customer'])) {
 		
 	$sql=$pdo->prepare(
-		'select * from favorite, product where customer_id=? and product_id=id');
+		'select * from favorite, product where customer_id=? and product_id=id');//テーブルを結合し顧客IDから抽出
 	$sql->execute([$_SESSION['customer']['id']]);
 	$stm=$sql->fetchAll();
 	if (!empty($stm)) {
 		echo '<table class="table-favorite">';
 	echo '<tr><th>商品番号</th><th>商品名</th><th>価格</th><th>削除</th>';
-	foreach ($stm as $row) {
+	foreach ($stm as $row) {//表示
 		$id=$row['id'];
 		echo '<tr>';
 		echo '<td>', $id, '</td>';
@@ -40,7 +40,7 @@ if (isset($_SESSION['customer'])) {
 			'</a></td>';
 		echo '<td>', $row['price'], '</td>';
 		echo '<td><a href="favorite-delete.php?id=', $id, 
-			'">削除</a></td>';
+			'">削除</a></td>';//削除の際ID送信
 		echo '</tr>';
 		echo '</table>';
 	}
