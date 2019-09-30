@@ -3,10 +3,10 @@
 require_once(__DIR__.'/config.php');
 
 try{
-	$db=new PDO(DSN,DB_USERNAME,DB_PASSWORD);
+	$db=new PDO(DSN,DB_USERNAME,DB_PASSWORD);//データベース接続
     $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
  }catch(PDOException $e){
-     echo $e->getmessage();
+     echo $e->getmessage();//エラー表示
      exit;
  } 
 ?>
@@ -24,7 +24,7 @@ try{
 	</div>
 	<div class="category_block">
 <?php
-$sql=$db->query("select * from sale_product ");
+$sql=$db->query("select * from sale_product ");//セール商品の一覧表示
 foreach ($sql as $row) :?>
 <div class="category_kind">
 	<a href="sale-detail.php?id=<?php echo $row['product_id']; ?>">
