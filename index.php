@@ -1,10 +1,10 @@
 <?php
  if($_SERVER['REQUEST_METHOD']==='POST'){
-if(isset($_REQUEST['yes'])){
+if(isset($_REQUEST['yes'])){//20歳以上のお客様の場合の処理
 	header('Location:index1.php');exit();
 }
 
-if(isset($_REQUEST['no'])){
+if(isset($_REQUEST['no'])){//20才未満のお客様の処理
 	echo '<script>alert("年齢制限を満たされない方は恐れ入りますがページをお閉じください。");</script>';
 }
 }
