@@ -8,33 +8,33 @@ define('MAX_FILE_SIZE', 1 * 1024 * 1024);
     exit();
   }
 try{
-  $db=new PDO(DSN,DB_USERNAME,DB_PASSWORD);
+  $db=new PDO(DSN,DB_USERNAME,DB_PASSWORD);//データベース接続
     $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
     
    
  }catch(PDOException $e){
-     echo $e->getmessage();
+     echo $e->getmessage();//例外表示
      exit;
  }   
 if(isset($_REQUEST['command'])){
   switch ($_REQUEST['command']) {
-    case 'update':
+    case 'update'://更新
     if(empty($_REQUEST["name"] and $_REQUEST["price"]  and $_REQUEST["description"] and $_REQUEST["degree"] and $_REQUEST["taste"]and $_REQUEST["genre"]))
       break;
   $sql=$db->prepare('update product set name=?,price=?,description=?,degree=?,taste=?,genre=? where id=?');
         $sql->execute([$_REQUEST['name'],$_REQUEST['price'],$_REQUEST['description'],$_REQUEST['degree'],$_REQUEST['taste'],$_REQUEST['genre'],$_REQUEST['id']]);
       break;
-        case 'insert':
+        case 'insert'://追加
         if(empty($_REQUEST["name"] and $_REQUEST["price"]  and $_REQUEST["description"] and $_REQUEST["degree"] and $_REQUEST["taste"] and $_REQUEST["genre"]))    
         break;
         $sql=$db->prepare('insert into product values(null,?,?,?,?,?,?)');
         $sql->execute([$_REQUEST["name"],$_REQUEST["price"],$_REQUEST["description"],$_REQUEST["degree"],$_REQUEST["taste"],$_REQUEST["genre"]]);
         break;
-        case 'delete':
+        case 'delete'://削除
         $sql=$db->prepare('delete from product where id=?');
         $sql->execute([$_REQUEST['id']]);
         break;
-        case 'sale':
+        case 'sale'://セール商品へ
         $sql=$db->prepare('insert into sale_product values(null,?,?,?,?,?,?,?)');
         $sql->execute([$_REQUEST['id'],$_REQUEST["name"],$_REQUEST["price"],$_REQUEST["description"],$_REQUEST["degree"],$_REQUEST["taste"],$_REQUEST["genre"]]);
         $sql=$db->prepare('delete from product where id=?');
@@ -45,7 +45,7 @@ if(isset($_REQUEST['command'])){
 
   if(isset($_REQUEST['command_s'])){
   switch ($_REQUEST['command_s']) {
-    case 'update':
+    case 'update'://セール商品更新
     if(empty($_REQUEST["name"] and $_REQUEST["price"] and $_REQUEST["genre"] and $_REQUEST["description"] and $_REQUEST["degree"] and $_REQUEST["taste"]))  
       break;
     $sql=$db->prepare('update sale_product set name=?,price=?,description=?,degree=?,taste=?,genre=? where id=?');
@@ -57,15 +57,16 @@ if(isset($_REQUEST['command'])){
         $sql=$db->prepare('insert into sale_product values(null,?,?,?)');
         $sql->execute([$_REQUEST['name'],$_REQUEST['price'],$_REQUEST['genre']]);
         break;
-        case 'delete':
+        case 'delete'://セール商品削除
         $sql=$db->prepare('delete from sale_product where id=?');
         $sql->execute([$_REQUEST['id']]);
         break;
      
   }
 }
+//画像アップロード処理
 if(isset($_REQUEST['upload'])){
-  if(isset($_FILES['image']) && isset($_FILES['image']['error'])){
+  if(isset($_FILES['image']) && isset($_FILES['image']['error'])){//エラーチェック
       switch ($_FILES['image']['error']) {
         case UPLOAD_ERR_OK:
          
@@ -88,9 +89,9 @@ if(isset($_REQUEST['upload'])){
         echo '<a href="owner.php">戻る</a>';
         exit;
       }
-  $imagetype=exif_imagetype($_FILES['image']['tmp_name']);
+  $imagetype=exif_imagetype($_FILES['image']['tmp_name']);//拡張子のタイプをを変数に入れる
   switch ($imagetype) {
-    case IMAGETYPE_JPEG:
+    case IMAGETYPE_JPEG://ＪＰＥＧの場合変数に代入
        $ext='jpg';
       break;
     
@@ -101,11 +102,11 @@ if(isset($_REQUEST['upload'])){
       break;
   }
   foreach ($db->query('select max(id) from product') as $row) {
-  $maxid=$row['max(id)'];
+  $maxid=$row['max(id)'];//最大の商品ＩＤと画像ファイル名を紐づける
 }
   $imagefilename=sprintf('%s.%s',$maxid,$ext);
   $savepath='images/'.$imagefilename;
-  if(move_uploaded_file($_FILES['image']['tmp_name'],$savepath)){
+  if(move_uploaded_file($_FILES['image']['tmp_name'],$savepath)){//ファイルを移動させる
     echo '<script>alert("アップロードに成功しました。");</script>';
   }else{
     echo '<script>alert("アップロードに失敗しました。");</script>';
@@ -113,15 +114,12 @@ if(isset($_REQUEST['upload'])){
 }
 
 
-  if(isset($_REQUEST['command_c'])){
-    // if(echo '<script>confirm("キャンセル処理を確認しましたか？");</script>';){
+  if(isset($_REQUEST['command_c'])){//キャンセルリクエストの商品をデータベースから削除する処理
     $sql_delete1=$db->prepare('delete from purchase where id=?');
     $sql_delete1->execute([$_REQUEST['id']]);
     $sql_delete2=$db->prepare('delete from purchase_detail where purchase_id=?');
     $sql_delete2->execute([$_REQUEST['id']]);
-//   }else{
-//       exit();
-// }
+
 }
 ?>
 <!DOCTYPE html>
@@ -154,7 +152,7 @@ if(isset($_REQUEST['upload'])){
         
      foreach ($sql as $row){
   echo '<tr>';    
-  echo '<form class="ib" action="owner.php" method="post">';
+  echo '<form class="ib" action="owner.php" method="post">';//更新の情報送信
   echo '<input type="hidden" name="command" value="update">';
   echo '<input type="hidden" name="id" value="', $row['id'], '">';
   echo '<td>'.$row['id'].'</td>';
@@ -173,12 +171,12 @@ if(isset($_REQUEST['upload'])){
   echo '</td> ';
   echo '<td><input type="submit" value="更新"></td>';
   echo '</form> ';
-  echo '<form class="ib" action="owner.php" method="post">';
+  echo '<form class="ib" action="owner.php" method="post">';//削除の情報送信
   echo '<input type="hidden" name="command" value="delete">';
   echo '<input type="hidden" name="id" value="', $row['id'], '">';
   echo '<td><input type="submit" value="削除"></td>';
   echo '</form>';
-  echo '<form class="ib" action="owner.php" method="post">';
+  echo '<form class="ib" action="owner.php" method="post">';//セール商品テーブルに追加する処理送信
   echo '<input type="hidden" name="command" value="sale">';
   echo '<input type="hidden" name="id" value="', $row['id'], '">';
   echo '<input type="hidden" name="name" value="', $row['name'], '">';
@@ -193,7 +191,7 @@ if(isset($_REQUEST['upload'])){
 }
 ?>
 <tr>
-<form action="owner.php" method="post">
+<form action="owner.php" method="post"><!--商品追加の処理送信-->
 <input type="hidden" name="command" value="insert">
 <td></td>
 <td><input type="text" name="name"></td>
@@ -202,7 +200,7 @@ if(isset($_REQUEST['upload'])){
 <td><input type="text" name="degree"></td>
 <td><input type="text" name="taste"></td>
 <td>
-<select name="genre">
+<select name="genre"><!--ジャンル選択-->
 <option value="ビール">ビール</option>
 <option value="ウイスキー">ウイスキー</option>
 <option value="ワイン">ワイン</option>
@@ -221,11 +219,11 @@ if(isset($_REQUEST['upload'])){
    <th>ID</th><th>商品Id</th><th>商品名</th><th>価格</th><th>商品説明</th><th>度数</th><th>ジャンル詳細</th><th>ジャンル</th>
  </tr>
   <?php
- $sql=$db->query('select * from sale_product ');
+ $sql=$db->query('select * from sale_product ');//セール商品表示
         
      foreach ($sql as $row){
   echo '<tr>';    
-  echo '<form class="ib" action="owner.php" method="post">';
+  echo '<form class="ib" action="owner.php" method="post">';//更新の処理送信
   echo '<input type="hidden" name="command_s" value="update">';
   echo '<input type="hidden" name="id" value="', $row['id'], '">';
   echo '<td>';
@@ -255,7 +253,7 @@ if(isset($_REQUEST['upload'])){
   echo '<input type="submit" value="更新">';
   echo '</td> ';
   echo '</form> ';
-  echo '<form class="ib" action="owner.php" method="post">';
+  echo '<form class="ib" action="owner.php" method="post">';//削除の処理送信
   echo '<input type="hidden" name="command_s" value="delete">';
   echo '<input type="hidden" name="id" value="', $row['id'], '">';
   echo '<td><input type="submit" value="削除"></td>';
@@ -270,6 +268,7 @@ if(isset($_REQUEST['upload'])){
       <div>
  <p><a href="index1.php" class="rhome">ホーム</a></p>
  <hr>
+       <!--画像追加の処理-->
  <p class="ow">画像追加(※JPEGファイルのみ、またファイルサイズ1ＭＢ以下）</p>
  <form action="owner.php" method="post" enctype="multipart/form-data">
   <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MAX_FILE_SIZE;?>"> 
@@ -279,6 +278,7 @@ if(isset($_REQUEST['upload'])){
  </form>
  </div>
  <hr>
+   <!--購入された商品の一覧表示-->
  <p class="ow">注文状況</p>
  <table border="1">
  <tr>
@@ -288,6 +288,7 @@ if(isset($_REQUEST['upload'])){
 <?php
 $sql=$db->query('select * from purchase,purchase_detail,customer where state=0 and purchase.id=purchase_detail.purchase_id and purchase.customer_id=customer.id');
 foreach ($sql as $row) {
+ //stateが0のものを抽出
   echo '<tr>';
   echo '<td>';
   echo $row['purchase_id'];
@@ -310,7 +311,7 @@ foreach ($sql as $row) {
 
 </table>
 <p><a href="index1.php" class="rhome">ホーム</a></p>
-<hr>
+<hr><!--キャンセルリクエスト一覧-->
  <p class="ow">キャンセルリクエスト一覧</p>
  
  <table border="1">
@@ -321,6 +322,7 @@ foreach ($sql as $row) {
 <?php
 $sql=$db->query('select * from purchase,purchase_detail,customer where state=1 and purchase.id=purchase_detail.purchase_id and purchase.customer_id=customer.id');
 foreach ($sql as $row) {
+ //stateが1のものを抽出
   echo '<tr>';
   echo '<td>';
   echo $row['purchase_id'];
@@ -338,7 +340,7 @@ foreach ($sql as $row) {
   echo $row['count'];
   echo '</td> ';
   echo '<td>';
-  echo '<form class="ib" action="owner.php" method="post">';
+  echo '<form class="ib" action="owner.php" method="post">'; //キャンセルリクエストを確認してキャンセルボタンをオーナーが押したときデータベースから削除する
   echo '<input type="hidden" name="command_c" value="削除">';
   echo '<input type="hidden" name="id" value="', $row['purchase_id'], '">';
   echo '<input type="submit" value="削除">';
