@@ -3,10 +3,10 @@
 require_once(__DIR__.'/config.php');
 
 try{
-	$pdo=new PDO(DSN,DB_USERNAME,DB_PASSWORD);
+	$pdo=new PDO(DSN,DB_USERNAME,DB_PASSWORD);//データベース接続
     $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
  }catch(PDOException $e){
-     echo $e->getmessage();
+     echo $e->getmessage();//エラー表示
      exit;
  } 
 ?>
@@ -29,10 +29,10 @@ try{
 	$keyword="";
 
 	if(isset($_REQUEST['keyword'])){
-		$keyword=$_REQUEST['keyword'];
+		$keyword=$_REQUEST['keyword'];//送られてきたキーワードを変数に格納
 	}
 
-	$sql=$pdo->prepare('select * from product where name like ?');
+	$sql=$pdo->prepare('select * from product where name like ?');//あいまい検索
 	$sql->execute(['%'.$keyword.'%']);
 	foreach ($sql as $row) {
 		echo '<div class="category_kind"><a href="detail.php?id=',$row['id'],'">';
