@@ -3,25 +3,25 @@
 require_once(__DIR__.'/config.php');
 
 try{
-	$pdo=new PDO(DSN,DB_USERNAME,DB_PASSWORD);
+	$pdo=new PDO(DSN,DB_USERNAME,DB_PASSWORD);//データベース接続
     $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
  }catch(PDOException $e){
-     echo $e->getmessage();
+     echo $e->getmessage();//例外表示
      exit;
  } 
 ?>
 <?php
 if ($_SERVER ['REQUEST_METHOD'] === 'POST'){
-	$id=$_REQUEST['id'];
+	$id=$_REQUEST['id'];//送られてきたＩＤを変数に代入
 if(!isset($_SESSION['product'])){
 	$_SESSION['product']=[];
 }
 
 $count=0;
-if(isset($_SESSION['product'][$id])){
+if(isset($_SESSION['product'][$id])){//任意の商品が既にカートに入っている場合の個数を代入
 	$count=$_SESSION['product'][$id]['count'];
 }
-$_SESSION['product'][$id]=[
+$_SESSION['product'][$id]=[//セッション格納
 'name'=>$_REQUEST['name'],
 'price'=>$_REQUEST['price'],
 'count'=>$count+$_REQUEST['count']
@@ -39,17 +39,17 @@ echo '<script>alert("カートに【',$_REQUEST['name'],'】を追加しまし�
 	<div class="detail-all">
 		<div class="detail-img">
 	<?php
-	$sql=$pdo->prepare('select * from sale_product where product_id=?');
+	$sql=$pdo->prepare('select * from sale_product where product_id=?');//セールプロダクトテーブルから抽出
 	$sql->execute([$_REQUEST['id']]);
 	foreach ($sql as $row) {
 		echo '<img src="images/',$row['product_id'], '.jpg" width="200" height="200" class="detail-fadein">';
 		echo '<p>※画像はイメージです</p></div>';
-		echo '<div class="detail-about"><form action="detail.php" method="post">';
+		echo '<div class="detail-about"><form action="sale-detail.php" method="post">';
 		echo '<p>商品番号：',$row['product_id'],'</p>';
 		echo '<p>商品名：',$row['name'],'</p>';
 		echo '<p>価格：本体価格',$row['price'],'円　税込価格',round(($row['price'])*1.08),'円</p>';
 		echo '<p>個数：<select name="count">';
-		for ($i=1;$i<=10;$i++){
+		for ($i=1;$i<=10;$i++){//個数は10個以内で選択
 			echo'<option value="',$i,'">',$i,'</option>';
 		}
 		echo '</select></p>';
