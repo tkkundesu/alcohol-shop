@@ -3,10 +3,10 @@
 require_once(__DIR__.'/config.php');
 
 try{
-	$pdo=new PDO(DSN,DB_USERNAME,DB_PASSWORD);
+	$pdo=new PDO(DSN,DB_USERNAME,DB_PASSWORD);//データベース接続
     $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
  }catch(PDOException $e){
-     echo $e->getmessage();
+     echo $e->getmessage();//エラー表示
      exit;
  } 
 ?>
@@ -16,12 +16,12 @@ echo '<h2>ご注文履歴</h2>';
 if (isset($_SESSION['customer'])) {
 	
 	$sql_purchase=$pdo->prepare(
-		'select * from purchase where customer_id=? and state=0 order by id desc');
+		'select * from purchase where customer_id=? and state=0 order by id desc');//購入テーブルから顧客ＩＤに照らし合わせたものを逆順に抽出
 	$sql_purchase->execute([$_SESSION['customer']['id']]);
 	foreach ($sql_purchase as $row_purchase) {
 		$sql_detail=$pdo->prepare(
 			'select * from purchase_detail,product '.
-			'where purchase_id=? and product_id=id');
+			'where purchase_id=? and product_id=id');//商品詳細と商品テーブルを結合し抽出
 		$sql_detail->execute([$row_purchase['id']]);
 		echo '<table class="table-form">';
 		echo '<tr><th>商品番号</th><th>商品名</th>', 
@@ -45,7 +45,7 @@ if (isset($_SESSION['customer'])) {
 			$total, '円(税込）</td></tr>';
 		echo '</table>';
 			if($_SERVER['REQUEST_METHOD']==='POST'){
-			$sql=$pdo->prepare('update purchase set state=1 where id=?');
+			$sql=$pdo->prepare('update purchase set state=1 where id=?');//注文商品をキャンセルする
 		    $sql->execute([$_REQUEST['id']]) ;
 		    header('Location:history.php');exit();}
 		echo '<form action="" method="post">';
