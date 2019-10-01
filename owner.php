@@ -89,8 +89,8 @@ if(isset($_REQUEST['upload'])){
         echo '<a href="owner.php">戻る</a>';
         exit;
       }
-  $imagetype=exif_imagetype($_FILES['image']['tmp_name']);//拡張子のタイプをを変数に入れる
-  switch ($imagetype) {
+  $imagetype=getimagesize($_FILES['image']['tmp_name']);//拡張子のタイプをを変数に入れる
+  switch ($imagetype[2]) {
     case IMAGETYPE_JPEG://ＪＰＥＧの場合変数に代入
        $ext='jpg';
       break;
